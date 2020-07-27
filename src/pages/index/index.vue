@@ -165,7 +165,6 @@
 		position: absolute;
 		left: 15%;
 		top:5%;
-		/* width: 100%; */
 	}
 	.p_infor{
 		color: #FAD154;
