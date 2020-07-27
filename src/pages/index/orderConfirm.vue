@@ -70,10 +70,6 @@ page{
     padding: 0;
     margin: 0;
 	}
-/* .order-infor, .order-price{
-    height: 25%;
-    border:1px solid black;
-} */
 .order-infor image{
     width: 22px;
     height: 22px;
@@ -87,14 +83,6 @@ page{
 .v-price{
     margin-top:15px
 }
-/* .order-notice{
-    height: 40%;
-    border:1px solid black;
-}
-.order-submit{
-    height: 10%;
-    border:1px solid black;
-} */
 .v-text{
     float: right;
 }
