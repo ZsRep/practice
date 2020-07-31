@@ -8,7 +8,7 @@
 			<image src="../../static/img/border.png"></image>
 			<view class="info">
 				<view class="p_infor" style="margin-left: 35px;">
-					<picker @change="bindAreaChange" :value="index" :range="array" range-key="name">
+					<picker @change="bindIndexChange" :value="index" :range="array" range-key="name">
 						 大区<view class="uni-input" >{{array[index].name}}
 							 <image src="../../static/img/JT.png" ></image>
 						 </view>
@@ -23,22 +23,22 @@
 					</picker>
 				</view>
 				<view class="p_infor">
-				角色名称 <input class="in-input" type="text" v-model="role" placeholder="请输入你的角色名称"/>
+				角色名称 <input class="in-input" type="text" v-model="role" placeholder="请输入你的角色名称" @input="getRole"/>
 				</view>
 				<view class="p_infor">
-					陪练盘数 <input class="in-input" type="text" placeholder="请输入陪练盘数"/>
+					陪练盘数 <input class="in-input" type="text" v-model="plNum" placeholder="请输入陪练盘数" @input="getPlNum"/>
 				</view>
 				<view class="p_infor" style="margin-left: 15px;">
 					<span style="position: relative;bottom:23px">陪练员</span>
 					 <checkbox-group class="checkbox-group" @change="checkboxChange">
 					     <label  v-for="item in items" :key="item.value" style="font-size:15px">
-								<checkbox :value="item.value" :checked="item.checked" />{{item.name}} <br>
+								<checkbox :value="item.name" :checked="item.checked" />{{item.name}} <br>
 					     </label>
 					</checkbox-group><br>
-					<input class="in-input" type="text" placeholder="请输入陪练编号" style="width: 60%;left: 25%;"/>
+					<input class="in-input" type="text" v-model="plCard" placeholder="请输入陪练编号" style="width: 60%;left: 25%;" @input="getPlCard"/>
 				</view>
 				<view class="p_infor">
-					联系方式<input class="in-input" type="text" placeholder="请输入你的角色名称"/>
+					联系方式<input class="in-input" type="text" v-model="phomeNum" placeholder="请输入联系方式" @input="getPhoneNum"/>
 				</view>
 				<!-- 按钮 -->
 				<view>
@@ -49,6 +49,7 @@
 								<view>
 									<image src="../../static/img/prompt.png" style="width: 230px;height: 70px;position: relative;left: 50%;margin-left: -115px"></image>
 								</view>
+								<view style="color:white;font-size:15px;position:relative;top:-31%;left:15px;">温馨提示</view>
 								<view >
 									<h6 style="position: relative;left: 15px;">营业时间</h6><br>
 									<view style="position:relative;top:5px">
@@ -62,9 +63,8 @@
 							</view>
 							<!-- 页面跳转 -->
 							<navigator url="/pages/index/orderConfirm?title=navigate" hover-class="navigator-hover">
-								<image class="cancel-p" src="../../static/img/cancel.png" style="width:20px;height:20px"></image>
+								<image class="cancel-p" src="../../static/img/cancel.png" style="width:20px;height:20px" @click="submitInfor"></image>
 							</navigator>
-							
 						</view>
 					</uni-popup>
 				</view>
@@ -85,7 +85,8 @@
 				title: '英雄联盟',
 				titleLog:'LEAGUE  LEGENDS',
 				role:'',
-				picked:[],
+				pLNum:'',
+				// picked:[],
 				items:[
 					{name:'随机陪练员'},
 					{name:'指定陪练员'}
@@ -94,26 +95,20 @@
 				index: 0,	
 				arrayStage: [{name:'青铜'},{name:'白银'},{name:'黄金'},{name:'铂金'},{name:'钻石'},{name:'大师'},{name:'王者'}],
 				Stageindex:0,
-				showtip:false,
+				plCard:'',
+				phoneNum:''
+				// showtip:false,
 			}
 		},
 		onLoad() {
-
 		},
 		methods: {
 			checkboxChange: function (e) {
-			    var items = this.items,
-			    values = e.detail.value;
-			    for (var i = 0, lenI = items.length; i < lenI; ++i) {
-			    const item = items[i]
-			        if(values.includes(item.value)){
-			            this.$set(item,'checked',true)
-			        }else{
-			            this.$set(item,'checked',false)
-			         }
-			    }
+				this.checked=e.detail.value			//获取复选框的数组值
+				this.checked=this.checked.join(",") 
 			},
-			bindAreaChange: function(e) {
+			// 获取当前下拉列表picker的值
+			bindIndexChange: function(e) {
 				this.index = e.detail.value
 			},
 			bindStrageChange: function(e) {
@@ -123,6 +118,30 @@
 			openPrompt() {
 				this.$refs.popupt.open()
 			},
+			// 获取input的值
+			 getRole:function(event){  
+            // 绕过v-model 获取input输入框的值  
+            this.role = event.detail.value   
+			},
+			getPlNum:function(event){   
+            this.plNum = event.detail.value   
+			},
+			getPlCard:function(event){   
+            this.plCard = event.detail.value   
+			},
+			getPhoneNum:function(event){   
+            this.phoneNum = event.detail.value   
+			},
+			// 缓存数据
+			submitInfor:function(){
+				uni.setStorageSync('role', this.role);//存储一个字符传值
+				uni.setStorageSync('pLNum', this.plNum);
+				uni.setStorageSync('index', this.index);
+				uni.setStorageSync('Stageindex', this.Stageindex);
+				uni.setStorageSync('plCard', this.plCard);
+				uni.setStorageSync('checked', this.checked);
+				uni.setStorageSync('phoneNum', this.phoneNum);
+			}
 		}
 	}
 </script>
@@ -224,6 +243,5 @@
 		top: 30px;
 		left: 50% !important;
 		margin: 0 0 0 -10px !important;
-
 	}
 </style>

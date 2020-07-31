@@ -17,7 +17,14 @@
 			"style": {
 				"navigationBarTitleText": "订单确认"
 			}
+		},
+		{
+			"path": "pages/index/recharge",
+			"style": {
+				"navigationBarTitleText": "充值"
+			}
 		}
+
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
