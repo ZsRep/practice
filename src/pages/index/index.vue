@@ -149,6 +149,7 @@
 <style>
 	page{
 		height: 100%;
+		width:100%
 	}
 	.content {
 		position: relative;

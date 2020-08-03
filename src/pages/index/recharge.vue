@@ -12,7 +12,7 @@
             <text>微信支付</text>
         </view>
         <view>
-            <image class="weixin" src="../../static/img/weiixn.png"></image>
+            <image class="weixin" src="../../static/img/weixin.png"></image>
             <text style="position: relative;top: -5px;">微信支付</text> 
             <view class="re-button">
                 <view class="check" ref="check" v-model="color" :style="{'background':lineColor}" @click="changeColor"></view>
@@ -104,6 +104,6 @@
     border-radius: 0;
     height: 100%;
     color: white;
-    line-height: 3.5;
+    line-height: 3;
 }
 </style>
